@@ -9,7 +9,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/temperature')
+    fetch('/temperature')
       .then(response => response.json())
       .then(data => { this.setState({ data: data.data })})
       .catch(err => { console.error(err); });
