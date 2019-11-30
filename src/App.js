@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {data: []};
+  }
 
-export default App;
+  componentDidMount() {
+    fetch('http://localhost:3001/temperature')
+      .then(response => response.json())
+      .then(data => { this.setState({ data: data.data })})
+      .catch(err => { console.error(err); });
+  }
+
+  render() {
+      return (
+        <div className="App">
+          <LineChart width={600} height={300} data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <Line type="monotone" dataKey="temperature" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+        </LineChart>
+        </div>
+    )
+  }
+}
