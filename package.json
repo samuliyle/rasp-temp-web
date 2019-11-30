@@ -8,7 +8,9 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd client && yarn build && cd .. && yarn start",
-    "start": "node server.js"
+    "start": "node server.js",
+    "prod": "cd client && yarn --only=dev && yarn && yarn build",
+    "startProd": "SET NODE_ENV=production && node server.js"
   },
   "author": "",
   "license": "ISC",
